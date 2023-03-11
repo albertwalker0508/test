@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    const nums = [1, 1, 2, 3, 5];
+    const temp = [0, 0, 0, 0, 0];
+    const flags = [0, 0, 0, 0, 0];
+    const target = 12;
+    let blnFind = false;
+    let result = [];
+
+    function makenum(k) {
+
+      if(blnFind) return 1;
+      if(k > nums.length) return 0;
+
+      let checkSum = temp.reduce((sum, value, index) => {if(index >= k) return sum; return sum + value});
+
+      if(checkSum == target) {
+        result = [];
+        for(let i=0; i<k; i++) result.push(temp[i]);
+        blnFind = true;
+        return 1;
+      }
+
+      for(let i=0; i<nums.length; i++) {
+        temp[k] = nums[i];
+        if(flags[i] == 1) continue;
+        flags[i] = 1;
+        makenum(k + 1);
+        flags[i] = 0;
+      }
+    }
+
+    makenum(0);
+    console.log(result);
+  </script>
+</body>
+</html>
